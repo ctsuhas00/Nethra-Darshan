@@ -93,6 +93,12 @@ ul{margin:0;padding:0;list-style:none;}
   background:var(--bronze);
   display:inline-block;
 }
+.hero-eyebrow .eyebrow{
+  color:#fff;
+}
+.hero-eyebrow .eyebrow::before{
+  background:#fff;
+}
 .coords{
   font-family:var(--font-body);
   font-size:11px;
