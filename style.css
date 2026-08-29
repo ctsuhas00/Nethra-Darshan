@@ -1,0 +1,776 @@
+/* ============================================================
+   LAASYA VILAASA — Design System
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap');
+
+:root{
+  /* ---- color ---- */
+  --ivory:#F5F0E6;
+  --ivory-deep:#EFE7D6;
+  --sand:#DECBAA;
+  --charcoal:#22231D;
+  --charcoal-soft:#3A3B32;
+  --ocean:#3E5C63;
+  --ocean-deep:#2B4247;
+  --palm:#6B7A55;
+  --bronze:#A8794F;
+  --white:#FFFFFF;
+  --line: rgba(34,35,29,0.12);
+  --line-light: rgba(245,240,230,0.24);
+
+  /* ---- type ---- */
+  --font-display:'Fraunces', serif;
+  --font-body:'Manrope', sans-serif;
+
+  /* ---- layout ---- */
+  --container-width: 1280px;
+  --section-padding: 128px;
+  --section-padding-mobile: 72px;
+  --grid-gap: 24px;
+  --radius: 2px;
+  --transition: 500ms cubic-bezier(.22,.61,.36,1);
+  --transition-fast: 280ms cubic-bezier(.22,.61,.36,1);
+  /* actual measured height of the mobile sticky CTA, set by main.js;
+     the fallback (90px) covers the moment before JS has measured it */
+  --sticky-cta-h: 0px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0ms !important;scroll-behavior:auto !important;}
+}
+
+body{
+  margin:0;
+  font-family:var(--font-body);
+  background:var(--ivory);
+  color:var(--charcoal);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block;}
+img.img-fallback{object-fit:cover;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+ul{margin:0;padding:0;list-style:none;}
+
+::selection{background:var(--bronze);color:var(--white);}
+
+:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;}
+
+.container{
+  width:100%;
+  max-width:var(--container-width);
+  margin:0 auto;
+  padding:0 40px;
+}
+
+.section{padding:var(--section-padding) 0;}
+.section--tight{padding:96px 0;}
+.section--dark{background:var(--charcoal);color:var(--ivory);}
+.section--ocean{background:var(--ocean-deep);color:var(--ivory);}
+.section--sand{background:var(--ivory-deep);}
+
+/* ---- eyebrow / coordinates signature ---- */
+.eyebrow{
+  font-family:var(--font-body);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--bronze);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{
+  content:'';
+  width:22px;height:1px;
+  background:var(--bronze);
+  display:inline-block;
+}
+.coords{
+  font-family:var(--font-body);
+  font-size:11px;
+  letter-spacing:.12em;
+  color:currentColor;
+  opacity:.55;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---- typography ---- */
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-weight:500;
+  line-height:1.05;
+  margin:0;
+  letter-spacing:-0.01em;
+}
+.display-1{font-size:clamp(48px,8vw,108px);font-weight:400;line-height:.98;}
+.display-2{font-size:clamp(36px,5.2vw,68px);font-weight:400;}
+.display-3{font-size:clamp(28px,3.4vw,42px);}
+p{line-height:1.7;margin:0;color:var(--charcoal-soft);}
+.section--dark p, .section--ocean p{color:rgba(245,240,230,0.72);}
+.lede{font-size:19px;max-width:52ch;}
+
+.section-head{max-width:640px;margin-bottom:56px;}
+.section-head .display-2{margin-top:14px;}
+
+/* ---- buttons ---- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:16px 32px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  border:1px solid transparent;
+  border-radius:var(--radius);
+  transition:var(--transition-fast);
+  white-space:nowrap;
+}
+.btn-primary{background:var(--bronze);color:var(--white);}
+.btn-primary:hover{background:var(--charcoal);}
+.btn-outline{border-color:currentColor;color:var(--charcoal);background:transparent;}
+.btn-outline:hover{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal);}
+.btn-outline.on-dark{color:var(--ivory);}
+.btn-outline.on-dark:hover{background:var(--ivory);color:var(--charcoal);}
+.btn-ghost{padding:0;color:var(--charcoal);border-bottom:1px solid var(--line);padding-bottom:4px;}
+.btn-ghost:hover{border-color:var(--bronze);color:var(--bronze);}
+.btn-sm{padding:12px 22px;font-size:11px;}
+.btn[disabled]{opacity:.35;cursor:not-allowed;pointer-events:none;}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transform:translateY(-2px);}
+}
+
+/* ============================================================
+   IMAGE PLACEHOLDERS
+   Every real photograph has been removed; each slot is a labeled
+   placeholder so photography can be dropped in later. See README.
+   ============================================================ */
+.ph{
+  --ar:4/3;
+  position:relative;
+  aspect-ratio:var(--ar);
+  width:100%;height:auto;
+  background:
+    linear-gradient(160deg, var(--ivory-deep) 0%, var(--sand) 140%);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.ph::before{
+  content:attr(data-ph);
+  font-family:var(--font-body);font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--bronze);
+  text-align:center;padding:0 26px;max-width:26ch;
+}
+.ph::after{
+  content:'Image to be added';
+  position:absolute;bottom:16px;left:0;right:0;text-align:center;
+  font-family:var(--font-body);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--charcoal-soft);opacity:.45;
+}
+.ph--fill{position:absolute;inset:0;width:auto;height:auto;aspect-ratio:auto;border:none;}
+.ph--dark{background:linear-gradient(160deg, var(--charcoal-soft) 0%, var(--charcoal) 140%);border-color:var(--line-light);}
+.ph--dark::before{color:var(--sand);}
+.ph--dark::after{color:var(--ivory);opacity:.35;}
+.ph--zoom{transition:transform 700ms cubic-bezier(.22,.61,.36,1);}
+:is(.villa-row,.experience-card,.masonry-item,.room-card):hover .ph--zoom{transform:scale(1.045);}
+
+/* once a real (or dummy) photo is dropped into a .ph slot, fill the slot with
+   it and hide the placeholder label/caption automatically */
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.ph:has(img[src]:not([src=""]))::before,
+.ph:has(img[src]:not([src=""]))::after{display:none;}
+.location-map img{width:100%;height:100%;object-fit:cover;}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  padding:28px 0;
+  transition:var(--transition-fast);
+}
+.nav .container{display:flex;align-items:center;justify-content:space-between;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:19px;letter-spacing:.06em;
+  color:var(--ivory);
+  display:flex;flex-direction:column;line-height:1.15;
+  transition:var(--transition-fast);
+}
+.nav-logo small{font-family:var(--font-body);font-size:9px;letter-spacing:.24em;opacity:.65;text-transform:uppercase;font-weight:600;margin-top:2px;}
+.nav-links{display:flex;align-items:center;gap:38px;}
+.nav-links a{
+  font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ivory);position:relative;padding-bottom:4px;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--bronze);
+  transition:var(--transition-fast);
+}
+.nav-links a:hover::after{width:100%;}
+.nav-book{
+  border:1px solid var(--bronze);padding:12px 22px;font-size:11px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--white);
+  background:var(--bronze);border-radius:var(--radius);
+  transition:var(--transition-fast);
+}
+.nav-book:hover{background:var(--charcoal);border-color:var(--charcoal);color:var(--white);}
+.nav-toggle{display:none;background:none;border:0;padding:6px;color:var(--ivory);}
+
+.nav.is-scrolled{
+  background:rgba(34,35,29,0.92);
+  backdrop-filter:blur(10px);
+  padding:16px 0;
+  box-shadow:0 1px 0 var(--line-light);
+}
+
+body.villa-page .nav{background:rgba(34,35,29,0.92);backdrop-filter:blur(10px);padding:18px 0;}
+
+/* mobile nav overlay */
+.nav-overlay{
+  position:fixed;inset:0;background:var(--charcoal);z-index:950;
+  display:flex;flex-direction:column;justify-content:center;padding:40px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+.nav-overlay.is-open{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-overlay-close{position:absolute;top:28px;right:32px;background:none;border:0;color:var(--ivory);}
+.nav-overlay ul{display:flex;flex-direction:column;gap:2px;}
+.nav-overlay a{
+  font-family:var(--font-display);font-size:22px;font-weight:500;color:var(--ivory);
+  padding:11px 0;border-bottom:1px solid var(--line-light);display:block;
+  opacity:0;transform:translateY(14px);
+  transition:opacity 420ms cubic-bezier(.22,.61,.36,1), transform 420ms cubic-bezier(.22,.61,.36,1), border-color var(--transition-fast);
+}
+.nav-overlay.is-open a{opacity:1;transform:translateY(0);}
+.nav-overlay li:nth-child(1) a{transition-delay:60ms;}
+.nav-overlay li:nth-child(2) a{transition-delay:100ms;}
+.nav-overlay li:nth-child(3) a{transition-delay:140ms;}
+.nav-overlay li:nth-child(4) a{transition-delay:180ms;}
+.nav-overlay li:nth-child(5) a{transition-delay:220ms;}
+.nav-overlay li:nth-child(6) a{transition-delay:260ms;}
+.nav-overlay li:nth-child(7) a{transition-delay:300ms;}
+.nav-overlay li:nth-child(8) a{transition-delay:340ms;}
+.nav-overlay .btn{
+  margin-top:24px;align-self:flex-start;
+  opacity:0;transform:translateY(14px);
+  transition:opacity 420ms cubic-bezier(.22,.61,.36,1), transform 420ms cubic-bezier(.22,.61,.36,1);
+  transition-delay:380ms;
+}
+.nav-overlay.is-open .btn{opacity:1;transform:translateY(0);}
+
+@media (min-width:600px){
+  .nav-overlay a{font-size:27px;padding:13px 0;}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  color:var(--ivory);overflow:hidden;
+}
+.hero-media{position:absolute;inset:0;z-index:0;}
+.hero-media img{width:100%;height:100%;object-fit:cover;}
+.hero-media::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(20,22,17,.35) 0%, rgba(20,22,17,.15) 32%, rgba(20,22,17,.55) 78%, rgba(20,22,17,.85) 100%);
+}
+.hero-content{
+  position:relative;z-index:1;padding:0 40px 96px;max-width:var(--container-width);margin:0 auto;width:100%;
+}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:26px;color:var(--ivory);}
+.hero-eyebrow .coords{opacity:.7;}
+.hero h1{font-size:clamp(46px,9vw,124px);font-weight:400;max-width:16ch;}
+.hero .lede{color:rgba(245,240,230,.82);margin-top:26px;font-size:clamp(16px,1.7vw,20px);}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-top:44px;}
+
+/* ---- hero entrance sequence ----
+   Elements start hidden and are revealed by main.js adding `loaded`
+   to <body> right after DOMContentLoaded (with a hard timeout
+   fallback, and a <noscript> override in index.html), so content is
+   never permanently invisible if JS is slow, errors, or is disabled.
+   prefers-reduced-motion is already forced to ~0ms transitions
+   site-wide, so this sequence collapses to an instant reveal there. */
+.nav,.hero-eyebrow,.hero h1,.hero .lede{opacity:0;transform:translateY(22px);}
+.hero-ctas .btn{opacity:0;transform:translateY(18px);}
+body.loaded .nav{opacity:1;transform:translateY(0);transition:opacity 600ms cubic-bezier(.22,.61,.36,1) 120ms,transform 600ms cubic-bezier(.22,.61,.36,1) 120ms;}
+body.loaded .hero-eyebrow{opacity:1;transform:translateY(0);transition:opacity 700ms cubic-bezier(.22,.61,.36,1) 300ms,transform 700ms cubic-bezier(.22,.61,.36,1) 300ms;}
+body.loaded .hero h1{opacity:1;transform:translateY(0);transition:opacity 800ms cubic-bezier(.22,.61,.36,1) 450ms,transform 800ms cubic-bezier(.22,.61,.36,1) 450ms;}
+body.loaded .hero .lede{opacity:1;transform:translateY(0);transition:opacity 700ms cubic-bezier(.22,.61,.36,1) 650ms,transform 700ms cubic-bezier(.22,.61,.36,1) 650ms;}
+body.loaded .hero-ctas .btn{opacity:1;transform:translateY(0);transition:opacity 600ms cubic-bezier(.22,.61,.36,1),transform 600ms cubic-bezier(.22,.61,.36,1);}
+body.loaded .hero-ctas .btn:nth-child(1){transition-delay:800ms;}
+body.loaded .hero-ctas .btn:nth-child(2){transition-delay:900ms;}
+.scroll-cue{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--ivory);opacity:.8;
+}
+.scroll-cue span{font-size:10px;letter-spacing:.2em;text-transform:uppercase;}
+.scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--ivory),transparent);animation:scrollcue 2.2s ease-in-out infinite;}
+@keyframes scrollcue{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}50.01%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* tideline divider */
+.tideline{width:100%;height:40px;display:block;color:var(--bronze);opacity:.5;}
+.tideline path{fill:none;stroke:currentColor;stroke-width:1;}
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+.intro{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;}
+.intro-media{position:relative;}
+.intro-media img{width:100%;aspect-ratio:4/5;object-fit:cover;}
+.intro-media .coords{position:absolute;bottom:-18px;left:-18px;background:var(--ivory);padding:8px 14px;border:1px solid var(--line);}
+.intro-copy .display-2{margin-top:18px;margin-bottom:26px;}
+.intro-copy p + p{margin-top:16px;}
+
+/* ============================================================
+   VILLA SHOWCASE
+   ============================================================ */
+.villa-row{
+  display:grid;grid-template-columns:1fr 1fr;align-items:stretch;
+  border-top:1px solid var(--line);
+}
+.villa-row:last-child{border-bottom:1px solid var(--line);}
+.villa-row.reverse .villa-media{order:2;}
+.villa-media{position:relative;overflow:hidden;min-height:560px;}
+.villa-media img{width:100%;height:100%;object-fit:cover;transition:transform 900ms cubic-bezier(.22,.61,.36,1);}
+.villa-row:hover .villa-media img{transform:scale(1.045);}
+.villa-info{padding:64px 72px;display:flex;flex-direction:column;justify-content:center;}
+.villa-info .eyebrow{margin-bottom:20px;}
+.villa-info h3{font-size:clamp(38px,4.5vw,58px);}
+.villa-info p{margin-top:20px;max-width:44ch;}
+.villa-stats{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;}
+.villa-stat{display:flex;flex-direction:column;gap:4px;}
+.villa-stat b{font-family:var(--font-display);font-size:26px;font-weight:500;}
+.villa-stat span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--charcoal-soft);}
+.villa-info .btn{margin-top:38px;align-self:flex-start;}
+.villa-rating{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:13px;font-weight:600;}
+.villa-rating .stars{color:var(--bronze);}
+
+/* ============================================================
+   AMENITIES
+   ============================================================ */
+.amenity-groups{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);
+  counter-reset:amenity-index;
+}
+.amenity-card{background:var(--ivory);padding:44px 40px;counter-increment:amenity-index;position:relative;}
+.amenity-card .eyebrow{margin-bottom:22px;}
+.amenity-card ul li{
+  padding:12px 0;border-top:1px solid var(--line);font-size:15px;
+  display:flex;align-items:center;gap:12px;
+}
+.amenity-card ul li:first-child{border-top:none;}
+.amenity-card ul li::before{content:'';width:5px;height:5px;background:var(--bronze);border-radius:50%;flex:none;}
+
+/* ---- scroll reveal: a quiet serial cascade ----
+   Card 1 settles in, its features stagger, then card 2, then card 3 —
+   rather than everything fading in as one flat block. Driven by the
+   existing `.amenity-groups.reveal` → `.is-visible` mechanism in
+   main.js, so no extra JS is needed. */
+.amenity-card{opacity:0;transform:translateY(26px);transition:opacity 650ms cubic-bezier(.22,.61,.36,1),transform 650ms cubic-bezier(.22,.61,.36,1);}
+.amenity-groups.is-visible .amenity-card{opacity:1;transform:translateY(0);}
+.amenity-groups.is-visible .amenity-card:nth-child(1){transition-delay:0ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(2){transition-delay:450ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(3){transition-delay:900ms;}
+.amenity-card ul li{opacity:0;transform:translateY(14px);transition:opacity 500ms cubic-bezier(.22,.61,.36,1),transform 500ms cubic-bezier(.22,.61,.36,1);}
+.amenity-groups.is-visible .amenity-card ul li{opacity:1;transform:translateY(0);}
+.amenity-groups.is-visible .amenity-card:nth-child(1) ul li:nth-child(1){transition-delay:90ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(1) ul li:nth-child(2){transition-delay:180ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(1) ul li:nth-child(3){transition-delay:270ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(1) ul li:nth-child(4){transition-delay:360ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(2) ul li:nth-child(1){transition-delay:540ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(2) ul li:nth-child(2){transition-delay:630ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(2) ul li:nth-child(3){transition-delay:720ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(2) ul li:nth-child(4){transition-delay:810ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(3) ul li:nth-child(1){transition-delay:990ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(3) ul li:nth-child(2){transition-delay:1080ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(3) ul li:nth-child(3){transition-delay:1170ms;}
+.amenity-groups.is-visible .amenity-card:nth-child(3) ul li:nth-child(4){transition-delay:1260ms;}
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.experience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--grid-gap);}
+.experience-card{position:relative;aspect-ratio:3/4;overflow:hidden;}
+.experience-card:nth-child(2n){margin-top:56px;}
+.experience-card img{width:100%;height:100%;object-fit:cover;transition:transform 700ms cubic-bezier(.22,.61,.36,1);}
+.experience-card:hover img{transform:scale(1.06);}
+.experience-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,22,17,.78) 100%);}
+.experience-label{position:absolute;left:20px;right:20px;bottom:20px;z-index:1;color:var(--ivory);}
+.experience-label .name{font-family:var(--font-display);font-size:22px;}
+.experience-label .desc{font-size:12.5px;opacity:.8;margin-top:6px;}
+
+/* ============================================================
+   LOCATION
+   ============================================================ */
+.location-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
+.location-copy{padding:80px;display:flex;flex-direction:column;justify-content:center;}
+.location-map{position:relative;min-height:480px;background:var(--charcoal);overflow:hidden;}
+.location-map iframe{width:100%;height:100%;position:absolute;inset:0;border:0;filter:grayscale(.25) contrast(1.05);}
+.location-list{margin-top:30px;display:flex;flex-direction:column;gap:16px;}
+.location-list li{display:flex;justify-content:space-between;border-top:1px solid var(--line-light);padding-top:16px;font-size:14px;}
+.location-list b{font-family:var(--font-display);font-weight:500;}
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+.gallery-filters{display:flex;gap:10px;margin-bottom:40px;flex-wrap:wrap;}
+.gfilter{
+  padding:10px 20px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--line);background:transparent;border-radius:20px;transition:var(--transition-fast);
+}
+.gfilter.is-active,.gfilter:hover{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal);}
+.masonry{column-count:3;column-gap:var(--grid-gap);}
+.masonry-item{break-inside:avoid;margin-bottom:var(--grid-gap);position:relative;overflow:hidden;cursor:pointer;background:var(--sand);}
+.masonry-item img{width:100%;display:block;transition:transform 600ms ease;}
+.masonry-item:hover img{transform:scale(1.04);}
+.masonry-item.hide{display:none;}
+.masonry-item .zoom-hint{
+  position:absolute;inset:0;background:rgba(34,35,29,0);display:flex;align-items:center;justify-content:center;
+  transition:var(--transition-fast);
+}
+.masonry-item:hover .zoom-hint{background:rgba(34,35,29,.18);}
+
+.lightbox{
+  position:fixed;inset:0;background:rgba(15,16,12,.96);z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity 350ms cubic-bezier(.22,.61,.36,1),visibility 350ms;
+}
+.lightbox.is-open{opacity:1;visibility:visible;pointer-events:auto;}
+.lightbox img{max-width:88vw;max-height:82vh;object-fit:contain;}
+.lightbox-ph img.lightbox-img{position:static;width:auto;height:auto;}
+.lightbox-ph{
+  width:min(560px,80vw);aspect-ratio:4/5;border-color:var(--line-light);
+  transition:transform 380ms cubic-bezier(.22,.61,.36,1);
+}
+.lightbox .lightbox-ph{transform:scale(.94);}
+.lightbox.is-open .lightbox-ph{transform:scale(1);}
+.lightbox-close,.lightbox-prev,.lightbox-next{
+  position:absolute;background:none;border:1px solid var(--line-light);color:var(--ivory);
+  width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:var(--transition-fast);
+}
+.lightbox-close:hover,.lightbox-prev:hover,.lightbox-next:hover{background:var(--bronze);border-color:var(--bronze);}
+.lightbox-close{top:28px;right:28px;}
+.lightbox-prev{left:28px;top:50%;transform:translateY(-50%);}
+.lightbox-next{right:28px;top:50%;transform:translateY(-50%);}
+.lightbox-counter{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--ivory);font-size:12px;letter-spacing:.1em;opacity:.7;}
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+.reviews-head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:56px;}
+.rating-block{display:flex;align-items:center;gap:24px;}
+.rating-num{font-family:var(--font-display);font-size:96px;line-height:1;color:var(--ivory);}
+.rating-meta span{display:block;}
+.rating-meta .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);font-weight:700;}
+.rating-meta .stars{color:var(--bronze);margin:6px 0;}
+.rating-meta .count{font-size:13px;color:rgba(245,240,230,.6);}
+.review-scores{display:flex;gap:32px;flex-wrap:wrap;}
+.review-scores div{text-align:right;}
+.review-scores b{font-family:var(--font-display);font-size:22px;display:block;}
+.review-scores span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;}
+
+.review-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;}
+.review-track::-webkit-scrollbar{height:4px;}
+.review-track::-webkit-scrollbar-thumb{background:var(--line-light);}
+.review-card{
+  flex:0 0 min(420px,84vw);scroll-snap-align:start;background:rgba(245,240,230,.05);
+  border:1px solid var(--line-light);padding:36px;
+}
+.review-card .stars{color:var(--bronze);margin-bottom:18px;}
+.review-card p{color:rgba(245,240,230,.86);font-size:15.5px;}
+.review-card footer{margin-top:22px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.6;}
+
+/* ============================================================
+   EVENTS / DINING (split promo blocks)
+   ============================================================ */
+.promo-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);}
+.promo{background:var(--ivory);padding:72px;display:flex;flex-direction:column;justify-content:center;}
+.promo .display-3{margin-top:16px;margin-bottom:18px;}
+.promo .btn{margin-top:30px;align-self:flex-start;}
+
+/* ============================================================
+   BOOKING GATEWAY (modal)
+   ============================================================ */
+.booking-modal{
+  position:fixed;inset:0;background:rgba(15,16,12,.9);z-index:1000;
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity 380ms cubic-bezier(.22,.61,.36,1),visibility 380ms;
+}
+.booking-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;}
+.booking-panel{
+  background:var(--ivory);max-width:640px;width:100%;padding:56px;position:relative;
+  max-height:88vh;overflow-y:auto;
+  transform:translateY(24px) scale(.97);opacity:0;
+  transition:transform 420ms cubic-bezier(.22,.61,.36,1),opacity 420ms cubic-bezier(.22,.61,.36,1);
+}
+.booking-modal.is-open .booking-panel{transform:translateY(0) scale(1);opacity:1;}
+.booking-panel-close{position:absolute;top:24px;right:24px;background:none;border:0;color:var(--charcoal);transition:var(--transition-fast);}
+.booking-panel-close:hover{color:var(--bronze);transform:rotate(90deg);}
+.booking-step .eyebrow{margin-bottom:16px;}
+.booking-step h3{font-size:clamp(24px,3vw,32px);margin-bottom:28px;}
+.villa-choice{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.villa-choice button{
+  border:1px solid var(--line);background:var(--white);padding:26px 20px;text-align:left;transition:var(--transition-fast);
+  opacity:0;transform:translateY(14px);
+}
+.booking-modal.is-open .villa-choice button{opacity:1;transform:translateY(0);transition:opacity 420ms cubic-bezier(.22,.61,.36,1),transform 420ms cubic-bezier(.22,.61,.36,1),border-color var(--transition-fast),background var(--transition-fast);}
+.booking-modal.is-open .villa-choice button:nth-child(1){transition-delay:140ms;}
+.booking-modal.is-open .villa-choice button:nth-child(2){transition-delay:200ms;}
+.booking-modal.is-open .villa-choice button:nth-child(3){transition-delay:260ms;}
+.villa-choice button:hover{border-color:var(--bronze);background:var(--ivory-deep);}
+.villa-choice button .vname{font-family:var(--font-display);font-size:22px;display:block;}
+.villa-choice button .vsub{font-size:12px;color:var(--charcoal-soft);display:block;margin-top:6px;}
+.platform-list{display:flex;flex-direction:column;gap:12px;}
+.platform-list a,.platform-list button{
+  display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);padding:20px 24px;
+  background:var(--white);transition:var(--transition-fast);width:100%;text-align:left;
+  opacity:0;transform:translateY(12px);
+  animation:platformIn 420ms cubic-bezier(.22,.61,.36,1) forwards;
+}
+.platform-list a:nth-child(1),.platform-list button:nth-child(1){animation-delay:60ms;}
+.platform-list a:nth-child(2),.platform-list button:nth-child(2){animation-delay:130ms;}
+.platform-list a:nth-child(3),.platform-list button:nth-child(3){animation-delay:200ms;}
+@keyframes platformIn{to{opacity:1;transform:translateY(0);}}
+.platform-list a:hover,.platform-list button:hover{border-color:var(--bronze);}
+.platform-list .pname{font-weight:700;font-size:14px;letter-spacing:.04em;}
+.platform-list .parrow{opacity:.5;display:inline-block;transition:transform 260ms cubic-bezier(.22,.61,.36,1),opacity 260ms ease;}
+.platform-list a:hover .parrow,.platform-list button:hover .parrow{opacity:1;transform:translateX(4px);}
+.booking-back{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal-soft);margin-bottom:24px;display:inline-block;}
+.booking-back:hover{color:var(--bronze);}
+
+/* mobile sticky CTA */
+.sticky-cta{
+  position:fixed;left:0;right:0;bottom:0;z-index:800;background:var(--charcoal);
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom));display:none;align-items:center;justify-content:center;
+  box-shadow:0 -8px 24px rgba(0,0,0,.2);
+}
+.sticky-cta .btn{width:100%;justify-content:center;}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{background:var(--charcoal);color:var(--ivory);padding:96px 0 40px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:56px;}
+.footer-brand .nav-logo{margin-bottom:18px;}
+.footer-brand p{max-width:32ch;color:rgba(245,240,230,.62);}
+.footer h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);margin-bottom:22px;font-weight:700;}
+.footer ul li{margin-bottom:12px;}
+.footer ul a{color:rgba(245,240,230,.78);font-size:14.5px;transition:var(--transition-fast);}
+.footer ul a:hover{color:var(--bronze);}
+.footer-bottom{
+  margin-top:80px;padding-top:28px;border-top:1px solid var(--line-light);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(245,240,230,.5);
+}
+
+/* ============================================================
+   REVEAL ANIMATIONS
+   ============================================================ */
+.reveal{
+  opacity:0;transform:translateY(36px) scale(.985);
+  transition:opacity 850ms cubic-bezier(.22,.61,.36,1), transform 850ms cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.is-visible{opacity:1;transform:translateY(0) scale(1);}
+
+/* villa showcase: image + info children stagger in once the row is visible */
+.villa-row .villa-media{opacity:0;transform:translateY(24px) scale(1.01);transition:opacity 750ms cubic-bezier(.22,.61,.36,1), transform 750ms cubic-bezier(.22,.61,.36,1);}
+.villa-row.is-visible .villa-media{opacity:1;transform:translateY(0) scale(1);}
+.villa-info > *{opacity:0;transform:translateY(22px);transition:opacity 650ms cubic-bezier(.22,.61,.36,1), transform 650ms cubic-bezier(.22,.61,.36,1);}
+.villa-row.is-visible .villa-info > *{opacity:1;transform:translateY(0);}
+.villa-row.is-visible .villa-info > *:nth-child(1){transition-delay:80ms;}
+.villa-row.is-visible .villa-info > *:nth-child(2){transition-delay:150ms;}
+.villa-row.is-visible .villa-info > *:nth-child(3){transition-delay:220ms;}
+.villa-row.is-visible .villa-info > *:nth-child(4){transition-delay:290ms;}
+.villa-row.is-visible .villa-info > *:nth-child(5){transition-delay:360ms;}
+.villa-row.is-visible .villa-info > *:nth-child(6){transition-delay:430ms;}
+
+/* experience grid: cards stagger in together as a set */
+.experience-card{opacity:0;transform:translateY(30px);transition:opacity 700ms cubic-bezier(.22,.61,.36,1), transform 700ms cubic-bezier(.22,.61,.36,1);}
+.experience-grid.is-visible .experience-card{opacity:1;transform:translateY(0);}
+.experience-grid.is-visible .experience-card:nth-child(1){transition-delay:0ms;}
+.experience-grid.is-visible .experience-card:nth-child(2){transition-delay:90ms;}
+.experience-grid.is-visible .experience-card:nth-child(3){transition-delay:180ms;}
+.experience-grid.is-visible .experience-card:nth-child(4){transition-delay:270ms;}
+
+/* gallery masonry: items stagger in, and re-flow smoothly when filtered */
+.masonry-item{
+  opacity:0;transform:translateY(26px);
+  transition:opacity 600ms cubic-bezier(.22,.61,.36,1), transform 600ms cubic-bezier(.22,.61,.36,1);
+}
+.masonry.is-visible .masonry-item{opacity:1;transform:translateY(0);}
+.masonry.is-visible .masonry-item:nth-child(3n+1){transition-delay:0ms;}
+.masonry.is-visible .masonry-item:nth-child(3n+2){transition-delay:80ms;}
+.masonry.is-visible .masonry-item:nth-child(3n+3){transition-delay:160ms;}
+.masonry-item.leaving{opacity:0 !important;transform:scale(.94) !important;transition-delay:0ms !important;}
+
+/* room cards (villa detail pages) */
+.room-grid .room-card{opacity:0;transform:translateY(24px);transition:opacity 650ms cubic-bezier(.22,.61,.36,1), transform 650ms cubic-bezier(.22,.61,.36,1);}
+.room-grid.is-visible .room-card,.detail-body.is-visible .room-grid .room-card{opacity:1;transform:translateY(0);}
+.room-grid .room-card:nth-child(1){transition-delay:0ms;}
+.room-grid .room-card:nth-child(2){transition-delay:100ms;}
+.room-grid .room-card:nth-child(3){transition-delay:200ms;}
+
+/* image placeholders (and future photography) settle into view with a soft clipped reveal */
+.ph{
+  opacity:0;transform:scale(1.045);clip-path:inset(3%);
+  transition:opacity 650ms cubic-bezier(.22,.61,.36,1), transform 950ms cubic-bezier(.22,.61,.36,1), clip-path 950ms cubic-bezier(.22,.61,.36,1);
+}
+.ph.ph--revealed{opacity:1;transform:scale(1);clip-path:inset(0%);}
+
+/* ============================================================
+   VILLA DETAIL PAGE
+   ============================================================ */
+.villa-hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;color:var(--ivory);}
+.villa-hero-media{position:absolute;inset:0;}
+.villa-hero-media img{width:100%;height:100%;object-fit:cover;}
+.villa-hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,17,.15),rgba(20,22,17,.82));}
+.villa-hero-content{position:relative;z-index:1;padding:0 40px 72px;max-width:var(--container-width);margin:0 auto;width:100%;}
+.villa-quickfacts{display:flex;gap:36px;flex-wrap:wrap;margin-top:30px;}
+.villa-quickfacts div{display:flex;flex-direction:column;gap:4px;}
+.villa-quickfacts b{font-family:var(--font-display);font-size:24px;}
+.villa-quickfacts span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.7;}
+
+.detail-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:80px;}
+.detail-body h2{margin-bottom:18px;}
+.detail-body p + p{margin-top:16px;}
+.detail-amenity-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px;}
+.detail-amenity-list li{font-size:14.5px;display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);}
+.detail-amenity-list li::before{content:'';width:5px;height:5px;background:var(--bronze);border-radius:50%;flex:none;}
+
+.booking-side{background:var(--ivory-deep);padding:40px;height:fit-content;position:sticky;top:120px;border:1px solid var(--line);}
+.booking-side .rating-line{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:14px;font-weight:600;}
+.booking-side .rating-line .stars{color:var(--bronze);}
+.booking-side .btn{width:100%;justify-content:center;margin-bottom:12px;}
+
+.room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--grid-gap);}
+.room-card img{aspect-ratio:4/5;object-fit:cover;width:100%;}
+.room-card .rname{font-family:var(--font-display);font-size:19px;margin-top:14px;}
+.room-card .rbeds{font-size:13px;color:var(--charcoal-soft);margin-top:4px;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px){
+  .amenity-groups{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .amenity-card:last-child{grid-column:1/-1;}
+  .experience-grid{grid-template-columns:repeat(2,1fr);}
+  .experience-card:nth-child(2n){margin-top:0;}
+  .experience-card:nth-child(odd){margin-top:40px;}
+  .masonry{column-count:2;}
+  .location-wrap{grid-template-columns:1fr;}
+  .location-copy{padding:64px 40px;}
+  .detail-grid{grid-template-columns:1fr;}
+  .booking-side{position:static;}
+  .room-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* iPad portrait / narrow tablet: split rows stack before phone breakpoint kicks in */
+@media (max-width:900px){
+  .villa-row,.villa-row.reverse{grid-template-columns:1fr;}
+  .villa-row.reverse .villa-media{order:0;}
+  .villa-media{min-height:380px;}
+  .intro{grid-template-columns:1fr;gap:44px;}
+}
+
+/* ---- "Every Stay Includes" — phone-width editorial redesign ----
+   Below tablet width the 3-up grid gets cramped and the compressed
+   2-col fallback above still crowds the third card. On phones this
+   becomes a calm vertical sequence instead: one full-width block per
+   category, a numbered index standing in for the small dash-eyebrow,
+   and a dominant display-type heading. Content is unchanged — only
+   layout, spacing and the reveal timing above are affected. */
+@media (max-width:680px){
+  .amenity-groups{
+    display:flex;flex-direction:column;
+    background:none;border:none;gap:0;
+  }
+  .amenity-card{
+    padding:clamp(32px,8vw,44px) clamp(24px,6vw,32px);
+    border-bottom:1px solid var(--line);
+  }
+  .amenity-card:last-child{border-bottom:none;}
+  .amenity-card::before{
+    content:counter(amenity-index, decimal-leading-zero);
+    display:block;
+    font-family:var(--font-body);font-size:12px;font-weight:700;
+    letter-spacing:.22em;color:var(--bronze);opacity:.8;
+    margin-bottom:16px;
+  }
+  .amenity-card .eyebrow{
+    display:block;
+    font-family:var(--font-display);font-weight:500;
+    font-size:clamp(24px,7vw,30px);letter-spacing:-0.01em;
+    text-transform:none;color:var(--charcoal);
+    margin-bottom:20px;
+  }
+  .amenity-card .eyebrow::before{display:none;}
+  .amenity-card ul li{padding:14px 0;font-size:15px;}
+}
+
+@media (max-width:860px){
+  :root{--section-padding:var(--section-padding-mobile);}
+  .container{padding:0 22px;}
+  .nav-links,.nav-book{display:none;}
+  .nav-toggle{display:block;}
+  .intro{grid-template-columns:1fr;gap:44px;}
+  .villa-row,.villa-row.reverse{grid-template-columns:1fr;}
+  .villa-row.reverse .villa-media{order:0;}
+  .villa-media{min-height:340px;}
+  .villa-info{padding:44px 24px;}
+  .promo-split{grid-template-columns:1fr;}
+  .promo{padding:48px 28px;}
+  .masonry{column-count:2;}
+  .experience-grid{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px;}
+  .reviews-head{flex-direction:column;align-items:flex-start;}
+  .rating-num{font-size:72px;}
+  .sticky-cta{display:flex;}
+  body{padding-bottom:calc(var(--sticky-cta-h, 78px) + 8px);}
+  /* keep Explore Apartments clear of the fixed Book Your Stay bar */
+  .hero-content{padding-bottom:calc(var(--sticky-cta-h, 78px) + 32px);}
+  .hero-eyebrow{margin-bottom:18px;}
+  .hero .lede{margin-top:18px;}
+  .hero-ctas{margin-top:28px;gap:12px;}
+  .villa-choice{grid-template-columns:1fr;}
+  .booking-panel{padding:36px 24px;}
+  .room-grid{grid-template-columns:1fr;}
+  .villa-quickfacts{gap:22px;}
+}
+
+@media (max-width:520px){
+  .masonry{column-count:1;}
+  .display-1{font-size:44px;}
+  .footer-grid{grid-template-columns:1fr;}
+  /* single-column masonry is too tall for the reveal observer's 0.14
+     threshold to ever fire on small screens, so gallery items were
+     stuck invisible — show them directly at this breakpoint instead */
+  .masonry-item{opacity:1;transform:none;}
+  /* scroll cue can collide with the stacked hero CTAs at this width */
+  .scroll-cue{display:none;}
+
+  /* hero: fit the full stack — logo, eyebrow, heading, lede, both
+     CTAs — comfortably above the sticky "Book Your Stay" bar on
+     375–430px-wide phones without any fixed/negative offsets */
+  .nav{padding:20px 0;}
+  .nav-logo{font-size:16.5px;}
+  .hero h1{font-size:clamp(30px,10.5vw,42px);line-height:1.1;max-width:14ch;}
+  .hero .lede{font-size:14.5px;line-height:1.55;max-width:42ch;}
+  .hero-ctas{flex-direction:column;align-items:stretch;}
+  .hero-ctas .btn{justify-content:center;padding:15px 22px;}
+}
