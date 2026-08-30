@@ -552,9 +552,12 @@ body.loaded .hero-ctas .btn:nth-child(2){transition-delay:900ms;}
 .platform-list a:nth-child(1),.platform-list button:nth-child(1){animation-delay:60ms;}
 .platform-list a:nth-child(2),.platform-list button:nth-child(2){animation-delay:130ms;}
 .platform-list a:nth-child(3),.platform-list button:nth-child(3){animation-delay:200ms;}
+.platform-list a:nth-child(4),.platform-list button:nth-child(4){animation-delay:270ms;}
 @keyframes platformIn{to{opacity:1;transform:translateY(0);}}
 .platform-list a:hover,.platform-list button:hover{border-color:var(--bronze);}
-.platform-list .pname{font-weight:700;font-size:14px;letter-spacing:.04em;}
+.platform-list a:focus-visible,.platform-list button:focus-visible{outline:2px solid var(--bronze);outline-offset:2px;border-color:var(--bronze);}
+.platform-list .pname{font-weight:700;font-size:14px;letter-spacing:.04em;display:flex;align-items:center;gap:10px;}
+.platform-list .pname svg{flex:none;opacity:.75;}
 .platform-list .parrow{opacity:.5;display:inline-block;transition:transform 260ms cubic-bezier(.22,.61,.36,1),opacity 260ms ease;}
 .platform-list a:hover .parrow,.platform-list button:hover .parrow{opacity:1;transform:translateX(4px);}
 .booking-back{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal-soft);margin-bottom:24px;display:inline-block;}

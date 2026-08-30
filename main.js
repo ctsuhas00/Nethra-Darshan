@@ -16,10 +16,9 @@
    Nethra Darshan is a single villa, not separate listings, so each
    "accommodation" here is really one of its three bedrooms — chosen
    for the same reason a guest might ask about a specific room, but
-   every choice leads to the same villa-wide platforms below. Only
-   platforms with a real, verified listing URL are included — do not
-   add a platform, or a WhatsApp/phone "Direct Enquiry" row, without
-   a real verified link/number. */
+   every choice leads to the same villa-wide platforms below, plus a
+   fourth direct WhatsApp option appended in renderPlatforms(). Only
+   platforms with a real, verified listing URL/number are included. */
 const accommodations = {
   masterBedroom: {
     name: "Master Bedroom",
@@ -51,6 +50,21 @@ const propertyPlatforms = [
   { label: "Booking.com", url: "https://www.booking.com/hotel/in/nethra-darshan.html" },
   { label: "Agoda", url: "https://www.agoda.com/nethra-darshan/hotel/mangalore-in.html" }
 ];
+
+/* ---- direct WhatsApp booking : single configurable number ----
+   Change ONLY this value to update the number used everywhere below.
+   Format: country code + number, digits only, no "+", spaces, or dashes. */
+const WHATSAPP_NUMBER = "919902782570";
+
+/* Builds a bedroom-specific wa.me link with a pre-filled (not
+   auto-sent) inquiry message. Reused by every bedroom via
+   renderPlatforms() below — never duplicated per bedroom. */
+const buildWhatsAppUrl = (bedroomName) => {
+  const message = `Hi, I would like to book the ${bedroomName} at Nethra Darshan. Please let me know the availability, pricing, and booking details. Thank you.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+};
+
+const WHATSAPP_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.15c-.24.68-1.2 1.25-1.98 1.42-.53.11-1.22.2-3.55-.76-2.98-1.23-4.9-4.26-5.05-4.46-.15-.2-1.2-1.6-1.2-3.05 0-1.46.75-2.17 1.02-2.47.24-.27.53-.34.71-.34h.5c.16 0 .38-.03.58.45.24.58.8 2 .87 2.15.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.32.38-.45.51-.15.15-.31.32-.13.63.18.31.8 1.33 1.72 2.16 1.19 1.06 2.19 1.39 2.5 1.55.31.15.49.13.67-.08.18-.2.77-.9.98-1.2.2-.31.4-.26.68-.16.27.1 1.75.83 2.05 .98.3.15.5.23.57.36.08.13.08.75-.16 1.43z"/></svg>`;
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -359,6 +373,20 @@ document.addEventListener("DOMContentLoaded", () => {
         a.innerHTML = `<span class="pname">${label}</span><span class="parrow">→</span>`;
         platformList.appendChild(a);
       });
+
+      // Fourth option, every bedroom: direct WhatsApp inquiry
+      // pre-filled with the chosen bedroom's name. "Nethra Darshan"
+      // (the property-only step) has no single bedroom, so it's
+      // left out there and only shown once a bedroom is chosen.
+      if (key !== "property") {
+        const wa = document.createElement("a");
+        wa.href = buildWhatsAppUrl(title);
+        wa.target = "_blank";
+        wa.rel = "noopener noreferrer";
+        wa.setAttribute("aria-label", `Direct booking for the ${title} via WhatsApp — opens WhatsApp in a new tab with a pre-filled message`);
+        wa.innerHTML = `<span class="pname">${WHATSAPP_ICON}Direct Booking · WhatsApp</span><span class="parrow">→</span>`;
+        platformList.appendChild(wa);
+      }
 
       if (stepAccommodation.style.display !== "none") {
         swapStep(stepAccommodation, stepPlatform);
